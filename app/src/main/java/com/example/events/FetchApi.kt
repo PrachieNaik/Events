@@ -7,7 +7,7 @@ interface FetchApi {
     companion object {
         val BASE_URL = "https://opencollective.com/sustainoss/"
     }
-    @get:GET("events")
-    val events: Call<List<Event>>
+    @GET("events.json")
+    fun getEvents(): Call<List<Event>>
 
 }
