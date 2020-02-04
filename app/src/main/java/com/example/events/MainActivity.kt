@@ -3,44 +3,38 @@ package com.example.events
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+
 
 class MainActivity : AppCompatActivity() {
     var eventList:List<Event>?=null
 
-    var eventViewModel= EventViewModel()
+    lateinit var eventViewModel: EventViewModel
     val adapter = EventRecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+
         eventsRecyclerView.layoutManager= LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         eventsRecyclerView.adapter = adapter
-        eventViewModel.getEventData(
-            object : CallBack<List<Event>>
-            {
-                override fun onError() {
-                    Log.e("MainActivity","onError")
-                }
-                override fun onSuccess(list: List<Event>?) {
-                    eventList=list
 
-                    list?.let {
-                        adapter.updateList(it)
-                    }
+        eventViewModel.events.observe(this, Observer {
+            Log.e("MA"," list ${it.size}")
+            adapter.updateList(it)
+        })
 
+        eventViewModel.getEventData()
 
-                }
-
-            }
-        )
 
 
     }
 
 
 }
+
