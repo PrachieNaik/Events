@@ -39,12 +39,12 @@ object EventManager{
                 {
                     Log.e("EventManager",response.toString())
                 }
-                Log.e("EM"," items received ${response.body()?.size}")
                 callBack.onSuccess(response.body())
 
             }
 
         })
+
     }
 
 

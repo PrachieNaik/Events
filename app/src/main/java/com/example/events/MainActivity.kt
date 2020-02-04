@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     var eventList:List<Event>?=null
 
-    var eventRepository= EventRepository()
+    var eventViewModel= EventViewModel()
     val adapter = EventRecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,14 +20,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         eventsRecyclerView.layoutManager= LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         eventsRecyclerView.adapter = adapter
-        eventRepository.getEventData(
+        eventViewModel.getEventData(
             object : CallBack<List<Event>>
             {
                 override fun onError() {
                     Log.e("MainActivity","onError")
                 }
                 override fun onSuccess(list: List<Event>?) {
-                    Log.e("MA"," items received ${list?.size}")
                     eventList=list
 
                     list?.let {

@@ -11,6 +11,7 @@ data class Event (
     var endsAt:String?="",
     var timezone:String="",
     var location:Location?=null,
-    var url:String=""
+    var url:String="",
+    var isChecked:Boolean=false
 
 )
