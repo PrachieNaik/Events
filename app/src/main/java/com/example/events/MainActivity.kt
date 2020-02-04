@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         eventViewModel.getEventData()
 
-
+        val db=EventDatabase
+        db.invoke(this)
+        db.instance?.let { eventViewModel.getDbInstance(it) }
 
     }
 
