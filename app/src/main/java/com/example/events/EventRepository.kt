@@ -1,18 +1,20 @@
 package com.example.events
-
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class EventRepository{
     var eventManager=EventManager
-    lateinit var eventDao: EventDAO
+
     fun addToDb(dbInstance:EventDatabase,eventList: ArrayList<Event>)
     {
         for(element in eventList) {
-           dbInstance.eventDao().insertAll(element)
+           dbInstance.eventDao().insert(element)
         }
     }
-
+    fun getFromDb(dbInstance:EventDatabase): LiveData<List<Event>>
+    {
+        return dbInstance.eventDao().getAllEvents()
+    }
     fun getEventData(callBack: CallBack<List<Event>>){
         eventManager.getEventData(callBack)
     }

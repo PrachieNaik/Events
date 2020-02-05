@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.amitshekhar.DebugDB
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,17 +24,19 @@ class MainActivity : AppCompatActivity() {
 
         eventsRecyclerView.layoutManager= LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         eventsRecyclerView.adapter = adapter
-
-        eventViewModel.events.observe(this, Observer {
-            Log.e("MA"," list ${it.size}")
-            adapter.updateList(it)
-        })
-
-        eventViewModel.getEventData()
-
         val db=EventDatabase
         db.invoke(this)
         db.instance?.let { eventViewModel.getDbInstance(it) }
+
+//        eventViewModel.events.observe(this, Observer {
+//            Log.e("MA"," list ${it.size}")
+//            //adapter.updateList(it)
+//        })
+        eventViewModel.getDatafromDb().observe(this, Observer {
+            Log.e("fromdb","${it.size}")
+            adapter.updateList(it)
+        })
+        eventViewModel.getEventData()
 
     }
 

@@ -22,10 +22,7 @@ class EventRecyclerViewAdapter
 
     override fun onBindViewHolder(holder: EventVH, position: Int) {
         var event: Event? = eventList?.get(position)
-
         holder.bindItems(event)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventVH {
@@ -38,7 +35,7 @@ class EventRecyclerViewAdapter
         return eventList.size
     }
 
-    class EventVH(itemView: View): RecyclerView.ViewHolder(itemView)  {
+    class EventVH(itemView: View): RecyclerView.ViewHolder(itemView){
         val titleEvent = itemView.findViewById(R.id.titleEvent) as TextView
         val descriptionEvenet = itemView.findViewById(R.id.descriptionEvent) as TextView
         var imageEvent:ImageView?=itemView.findViewById(R.id.imageEvent)
